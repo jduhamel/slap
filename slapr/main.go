@@ -12,6 +12,7 @@ import (
 	"github.com/ohler55/slip/pkg/bag"
 
 	// Pull in all slip functions.
+	_ "github.com/jduhamel/slip-vault/vault"
 	_ "github.com/ohler55/slip-fhir/fhir"
 	_ "github.com/ohler55/slip-ggql/slipggql"
 	_ "github.com/ohler55/slip-jet/jet"
