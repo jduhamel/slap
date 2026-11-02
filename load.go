@@ -11,6 +11,7 @@ import (
 
 	// Pull in all functions.
 	_ "github.com/jduhamel/slip-agent/slipagent"
+	_ "github.com/jduhamel/slip-cloud/azure"
 	_ "github.com/jduhamel/slip-graph/slipgraph"
 	_ "github.com/jduhamel/slip-vault/vault"
 	"github.com/ohler55/slip"

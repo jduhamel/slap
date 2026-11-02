@@ -101,20 +101,27 @@ usage: %[2]s [<options>] [<filepath>]...
 	if 0 < len(coverage) {
 		slip.StartCoverage()
 	}
-	run()
+	failed := run()
 	if 0 < len(coverage) {
 		slip.StopCoverage()
 		slip.WriteCoverage(coverage)
 	}
+	if failed {
+		os.Exit(1)
+	}
 }
 
-func run() {
+func run() (failed bool) {
 	var path string
 	defer func() {
 		switch tr := recover().(type) {
 		case nil:
 			// normal exit
 		case *slip.Panic:
+			if tr.Fatal {
+				break // (quit) is a normal exit
+			}
+			failed = true
 			var (
 				prefix string
 				suffix string
@@ -136,6 +143,7 @@ func run() {
 				fmt.Print(string(buf))
 			}
 		default:
+			failed = true
 			if 0 < len(path) {
 				fmt.Printf("\n## error: %s in %s\n\n", tr, path)
 			} else {
@@ -272,4 +280,5 @@ func run() {
 		return
 	}
 	repl.Run()
+	return
 }
